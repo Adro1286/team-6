@@ -17,6 +17,18 @@ class FaultCode:
     EVENT_UPLOAD_FAILED = "EVENT_UPLOAD_FAILED"
     UNKNOWN_FAULT = "UNKNOWN_FAULT"
 
+def get_fault_code(data: dict):
+    if data.get("sensor_type") == "RFID" and data.get("device_status") == "FAULT":
+        return FaultCode.RFID_READ_FAILED
+
+    if (data.get("acknowledgment_status") in ["failure", "rejected"] 
+        or data.get("connectivity_status") == "offline" 
+        or data.get("authorization_status") == "unauthorized"
+        or (data.get("transmission_retry_count", 0) >= data.get("max_retries", 3) and data.get("buffer_status") != "sent")
+    ):
+        return FaultCode.EVENT_UPLOAD_FAILED
+    return FaultCode.UNKNOWN_FAULT
+
 @dataclass
 class Fault:
     fault_id: str
