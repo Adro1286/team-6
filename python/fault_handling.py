@@ -61,34 +61,3 @@ class FaultException(Exception):
         super().__init__(
             f"{fault.fault_code}: {fault.message}"
         )
-
-
-# test
-test_fault = Fault(
-    fault_id="FT-001",
-    fault_code=FaultCode.RFID_READ_FAILED,
-    severity=Severity.FAULT,
-    severity_name="FAULT",
-    fault_source="SENSOR",
-    station_id="1234",
-    device_id="5678",
-    sensor_type="RFID",
-    current_state="READING_RFID",
-    device_status="FAULT",
-    timestamp="2026-11-01T12:00:00Z",
-    message="RFID read failed.",
-    recommended_action="RETRY",
-    retry_count=0,
-    max_retries=3,
-    retry_status="PENDING",
-)
-
-print(test_fault)
-
-try:
-    raise FaultException(test_fault)
-
-except FaultException as error:
-    print("\n")
-    print("exception caught")
-    print(error)
