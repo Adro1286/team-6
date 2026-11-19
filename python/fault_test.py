@@ -2,13 +2,13 @@ from fault_handling import get_fault_code, FaultCode
 
 def test_rfid_fail():
   data = {
-    "sensor_type": "RFID"
+    "sensor_type": "RFID",
     "device_status": "FAULT"
   }
 
-result = get_fault_code(data)
-print("Test Result #1: ", result)
-assert result == FaultCode.RFID_READ_FAILED
+  result = get_fault_code(data)
+  print("Test Result #1: ", result)
+  assert result == FaultCode.RFID_READ_FAILED
 
 def test_event_upload_fail():
   data = {
