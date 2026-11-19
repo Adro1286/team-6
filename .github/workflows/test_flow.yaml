@@ -1,0 +1,23 @@
+name: Run on Commit or New Branch
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  fault-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: install dependencies
+        run: pip install pytest
+
+      - name: Run test script
+        run: python -m pytest python/fault_test.py -v -s
